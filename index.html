@@ -1,16 +1,44 @@
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head> 
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Proto game</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/menu.css" rel="stylesheet">
+        <script data-main="js/main" src="js/libs/require.js"></script>
     </head>
+
     <body>
-        <div>TODO write content</div>
+
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <h3 class="text-muted">Proto game</h3>
+        </div>
+        <div class="container" class="game-contant">
+            <div class="jumbotron">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <input type="email" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="password" class="form-control" placeholder="Password" required>
+                    <label class="checkbox">
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </div>
+        </div> <!-- /container -->
+        <div class="footer">
+
+        </div>
     </body>
 </html>

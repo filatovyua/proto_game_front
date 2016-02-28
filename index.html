@@ -1,44 +1,63 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
 
         <title>Proto game</title>
 
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/menu.css" rel="stylesheet">
-        <script data-main="js/main" src="js/libs/require.js"></script>
     </head>
 
     <body>
 
         <div class="header">
             <ul class="nav nav-pills pull-right">
-                <li class="active"><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
             <h3 class="text-muted">Proto game</h3>
         </div>
-        <div class="container" class="game-contant">
-            <div class="jumbotron">
-                    <h2 class="form-signin-heading">Please sign in</h2>
-                    <input type="email" class="form-control" placeholder="Email address" required autofocus>
-                    <input type="password" class="form-control" placeholder="Password" required>
-                    <label class="checkbox">
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </div>
+        <div class="container" id="game-content">
+
         </div> <!-- /container -->
         <div class="footer">
 
         </div>
+
+        <script id="auth" type="text/template">        
+            <div class="jumbotron">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <input name='login' type="text" class="form-control" placeholder="login" required autofocus>
+            <input name='password' type="password" class="form-control" placeholder="Password" required>
+            <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+            </label>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </div>
+        </script>
+        <script id="menu" type="text/template">
+            <div class="list-group">
+                <a href="#" class="list-group-item" name="newgame">Новая игра</a>  
+                <a href="#" class="list-group-item" name="scores">Результаты</a>  
+                <a href="#" class="list-group-item" name="exit">Выход</a>
+            </div>
+        </script>
+
+        <script id="game" type="text/template">
+            hello, game
+        </script>
+        
+        <script id="scores" type="text/template">
+            hello, scores
+        </script>
+        
+        <script id="profile" type="text/template">
+            hello, profile
+        </script>
+        
+        <script data-main="js/main" src="js/lib/require.js" ></script>
     </body>
 </html>

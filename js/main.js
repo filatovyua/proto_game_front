@@ -1,14 +1,31 @@
 require.config({
     paths:{
-        "jquery":"libs/jquery",
-        "fabric":"libs/fabric.all.min",
-        "backbone":"libs/backbone",
-        "underscore":"libs/underscore",
-        "menu":"game.menu",
-        "game":"game.start"
+        "jquery":"lib/jquery",
+        "backbone":"lib/backbone",
+        "underscore":"lib/underscore"
+    },
+    shim:{
+        'backbone':{
+            deps: ['underscore','jquery'],
+            exports: 'Backbone'
+        },
+        'underscore':{
+            exports:'_',
+        },
+        'jQuery':{
+            export:'$'
+        }
     }
 });
-
-require(["jquery","underscore","backbone","fabric","menu","game"],function($,undescore,backbone,fabric,menu,game){
-    //игра загружена
+define([
+    'backbone',
+    'jquery',
+    'route'
+], function(
+        Backbone,
+        route,
+        jQuery
+        ){
+    Backbone.history.start();
 });
+

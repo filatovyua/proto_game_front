@@ -5,10 +5,10 @@ define([
         ) {
     var SessionModel = Backbone.Model.extend({
         url: "",
+        user: "",
+        sessionId: 0,
         sendPost: function (data, eventSuccess, eventError) {
             var self = this;
-            self.trigger(eventSuccess,data);
-            return true;
             $.post(url, data)
                     .success(function (data) {
                         if (data.status == 1) {
@@ -22,16 +22,19 @@ define([
                     });
         },
         postAuth: function(data){
-           this.sendPost(data,'successAuth','errorAuth');
+            this.trigger('successAuth',data);
+           //this.sendPost(data,'successAuth','errorAuth');
         },
         postLogin: function(){
-            
+            this.trigger('successAuth',data);
         },
         postLogoff: function(){
-            
+            console.log("logoff");
+            this.trigger('successLogoff');
+            //this.sendPost({login:this.user,id:this.sessionId})
         }
     });
-    return new SessionModel;
+    return new SessionModel();
 });
 
 

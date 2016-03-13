@@ -15,10 +15,15 @@ define([
         initialize: function(){
             this.listenTo(this.session, 'successAuth', this.loginSuccess);
             this.listenTo(this.session, 'errorAuth', this.loginError);
-            this.render();
         },
         loginSuccess: function(){
+            this.session.user = this.$("input[name=login]").val();
+            var max = 1024;
+            this.session.id = Math.floor(Math.random() * (max  + 1));
             this.trigger('success');
+        },
+        show:function(){
+            this.render();  
         },
         loginError: function(){
             console.log("error login");

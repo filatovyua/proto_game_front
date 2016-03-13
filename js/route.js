@@ -4,56 +4,70 @@ define([
     'views/menu',
     'views/about',
     'views/contact',
-    'views/profile'
+    'views/profile',
+    'views/game',
+    'views/scores'
 ], function (
         Backbone,
         auth,
         menu,
         about,
         contact,
-        profile
+        profile,
+        game,
+        scores
         ) {
     var Router = Backbone.Router.extend({
         $container: null,
         initialize: function () {
             this.$container = $("#game-content");
             this.listenTo(auth, 'success', this.toMenu);
+            this.listenTo(menu, 'exit', this.toIndex);
+            this.listenTo(menu, 'scores', this.toScores);
+            this.listenTo(menu, 'profile', this.toProfile);
+            this.listenTo(menu, 'game', this.toGame);
+            this.toIndex();
         },
         routes: {
-            "": "auth",
-            'login': 'loginAction',
-            'logoff': 'logoffAction',
-            "menu": "menuAction",
-            "auth": "auth",
-            "start": "startAction",
-            "about": "aboutAction",
-            "contact": "contactAction",
-            '*default': "defaultAction"
+            "": "toIndex",
+            "auth" :"toLogin",
+            "menu": "toMenu",
+            "profile":"toProfile",
+            "scores":"toScores",
+            "game":"toGame",
+            '*default': "defaultAction",
         },
-        toTbout: function(){
+        toAbout: function(){
+            this.navigate('about'); 
             about.show();
         },
         toContact: function(){
             contact.show();
         },
-        toStart:function(){
-            
-        },
-        toExit:function(){
-            
-        },
-        toMenu: function(){
+        toMenu: function(){ 
+            this.navigate('menu'); 
             menu.show();
+        },
+        toScores: function(){
+            this.navigate('scores'); 
+            scores.show();
+        },
+        toGame: function(){
+            this.navigate('game'); 
+            game.show();
+        },
+        toProfile: function(){
+            this.navigate('profile'); 
+            profile.show();
         },
         defaultAction: function(){
             console.log("default");
         },
         toIndex:function(){
-            console.log("index");
-            this.navigate('',{trigger:true});  
+            this.navigate('auth',{trigger:true});  
         },
         toLogin:function(){
-            this.navigate('login',{trigger: true});
+            auth.show();
         }
     });
     return new Router();

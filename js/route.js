@@ -6,7 +6,8 @@ define([
     'views/contact',
     'views/profile',
     'views/game',
-    'views/scores'
+    'views/scores',
+    'views/settings'
 ], function (
         Backbone,
         auth,
@@ -15,7 +16,8 @@ define([
         contact,
         profile,
         game,
-        scores
+        scores,
+        settings
         ) {
     var Router = Backbone.Router.extend({
         $container: null,
@@ -25,6 +27,7 @@ define([
             this.listenTo(menu, 'exit', this.toIndex);
             this.listenTo(menu, 'scores', this.toScores);
             this.listenTo(menu, 'profile', this.toProfile);
+            this.listenTo(menu, 'settings', this.toSettings);
             this.listenTo(menu, 'game', this.toGame);
             this.toIndex();
         },
@@ -59,6 +62,10 @@ define([
         toProfile: function(){
             this.navigate('profile'); 
             profile.show();
+        },
+        toSettings: function(){
+            this.navigate("settings");
+            settings.show();
         },
         defaultAction: function(){
             console.log("default");

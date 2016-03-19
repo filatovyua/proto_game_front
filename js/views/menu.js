@@ -14,6 +14,7 @@ define([
           "click a[name=newgame]":"newGame",
           "click a[name=profile]":"showProfile",
           "click a[name=scores]":"showScores",
+          "click a[name=settings]":"showSettings",
           "click a[name=exit]":"logoff"
         },
         render:function(){
@@ -30,6 +31,9 @@ define([
         },
         showScores:function(){
             this.trigger("scores");
+        },
+        showSettings: function(){
+            this.trigger("settings");  
         },
         logoff:function(){
             this.session.postLogoff();

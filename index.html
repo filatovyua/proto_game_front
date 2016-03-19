@@ -30,12 +30,13 @@
         <script id="auth" type="text/template">        
             <div class="jumbotron">
             <h2 class="form-signin-heading">Please sign in</h2>
-            <input name='login' type="text" class="form-control" placeholder="login" required autofocus>
-            <input name='password' type="password" class="form-control" placeholder="Password" required>
+            <input name='login' type="text" class="form-control" placeholder="login" value='test' required autofocus>
+            <input name='password' type="password" class="form-control" placeholder="Password" value='123' required>
             <label class="checkbox">
             <input type="checkbox" value="remember-me"> Remember me
             </label>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button name='signin' class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+            <button name='signup' class="btn btn-lg btn-success btn-block" type="submit">Sign Up</button>
             </div>
         </script>
         <script id="menu" type="text/template">
@@ -43,12 +44,20 @@
                 <a href="javascript:;" class="list-group-item" name="newgame">Новая игра</a>  
                 <a href="javascript:;" class="list-group-item" name="profile">Профиль</a> 
                 <a href="javascript:;" class="list-group-item" name="scores">Результаты</a>  
+                <a href="javascript:;" class="list-group-item" name="settings">Настройки</a>
                 <a href="javascript:;" class="list-group-item" name="exit">Выход</a>
             </div>
         </script>
 
         <script id="game" type="text/template">
             <canvas id="canvas"></canvas>
+            <ul class="nav nav-pills pull-right">
+                <li><a href="javascript" name='exitGame'>Выход</a></li>
+            </ul>
+        </script>
+        
+        <script id="settings" type="text/template">
+            hello, settings
         </script>
         
         <script id="scores" type="text/template">

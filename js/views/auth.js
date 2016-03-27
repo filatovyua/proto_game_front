@@ -75,7 +75,7 @@ define([
         },
         registSuccess:function(){
             console.log("regist success");
-            this.loginSuccess();
+            this.submitClick();
         }
 
     });

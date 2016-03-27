@@ -41,7 +41,7 @@
         </script>
         <script id="menu" type="text/template">
             <div class="list-group">
-                <a href="javascript:;" class="list-group-item" name="newgame">Новая игра</a>  
+                <a href="javascript:;" class="list-group-item" name="rooms">Комнаты</a>  
                 <a href="javascript:;" class="list-group-item" name="profile">Профиль</a> 
                 <a href="javascript:;" class="list-group-item" name="scores">Результаты</a>  
                 <a href="javascript:;" class="list-group-item" name="settings">Настройки</a>
@@ -49,6 +49,24 @@
             </div>
         </script>
 
+        <script id="rooms" type="text/template">
+            <div class="list-group">
+                <a href="javascript:;" class="list-group-item" name="newroom">Новая комната</a>  
+                <div>
+                <h4>Комнаты</h4>
+                <div class='row' id='currentRooms'></div>
+                </div>
+                <a href="javascript:;" class="list-group-item" name="menu">Назад</a>
+            </div>
+        </script>
+        
+        <script id="roomTemplate" type="text/template">
+            <div class='col-md-4'>
+                 <div class='row name'><%= name %></div>
+                 <div class='row ID'><%= ID %></div>
+            </div>
+        </script>
+        
         <script id="game" type="text/template">
             <canvas id="canvas"></canvas>
             <ul class="nav nav-pills pull-right">

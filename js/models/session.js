@@ -7,13 +7,16 @@ define([
         _baseUrl: "http://localhost:9000/",
         user: "",
         sessionId: 0,
-        sendPost: function (action, data, eventSuccess, eventError) {
-            var self = this;            
+        sendPost: function (action, data, eventSuccess, eventError, type) {
+            var self = this;   
+            var type = type || "JSON";
             var url = this._baseUrl + action;
+            console.log(this._baseUrl+action);
             $.post(url, data)
                     .success(function (data) {
-                        console.log(data);
-                        if (data.status == 1) {
+                        if (type == "JSON")
+                            data = JSON.parse(data);
+                        if (data.status == "1") {
                             self.trigger(eventSuccess, data);
                         } else {
                             self.trigger(eventError, data.message)
@@ -35,9 +38,7 @@ define([
             this.sendPost(data,'successAuth','errorAuth');
         },
         postLogoff: function(){
-            console.log("logoff");
-            this.trigger('successLogoff');
-            //this.sendPost({login:this.user,id:this.sessionId})
+            this.sendPost("logout",{login:this.user,id:this.sessionId},"successLogoff","errorLogoff")
         },
         postTest: function(){
         },

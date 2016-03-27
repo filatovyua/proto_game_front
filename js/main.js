@@ -14,6 +14,9 @@ require.config({
         },
         'jQuery':{
             export:'$'
+        },
+        'lobbie':{
+            deps: ['rooms','lobbie']
         }
     }
 });

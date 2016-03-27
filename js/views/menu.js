@@ -11,7 +11,7 @@ define([
             this.listenTo(this.session, 'successLogoff', this.exit);
         },
         events:{
-          "click a[name=newgame]":"newGame",
+          "click a[name=rooms]":"showRooms",
           "click a[name=profile]":"showProfile",
           "click a[name=scores]":"showScores",
           "click a[name=settings]":"showSettings",
@@ -25,6 +25,9 @@ define([
         },
         newGame:function(){
             this.trigger("game");
+        },
+        showRooms: function(){
+            this.trigger("rooms");
         },
         showProfile: function(){
             this.trigger("profile");

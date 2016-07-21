@@ -1,8 +1,10 @@
-require.config({
+requirejs.config({
     paths:{
         "jquery":"lib/jquery",
         "backbone":"lib/backbone",
-        "underscore":"lib/underscore"
+        "underscore":"lib/underscore",
+        "session": "models/session",
+        "ws":"models/webSocket"
     },
     shim:{
         'backbone':{

@@ -39,20 +39,6 @@ define([
         },
         postLogoff: function(){
             this.sendPost("logout",{login:this.user,id:this.sessionId},"successLogoff","errorLogoff")
-        },
-        postTest: function(){
-        },
-        ws: null,
-        socketOpen: function(eventOpen, eventMessage){
-            this.ws = new WebSocket(this._baseUrl+"/gameplay");
-            this.ws.onopen = eventOpen;
-            this.ws.onmessage = eventMessage;            
-        },
-        socketClose: function(){
-            console.log("connection is over");
-        },
-        socketSend: function(data){
-            this.ws.send(data);
         }
     });
     return new SessionModel();

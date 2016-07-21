@@ -58,6 +58,19 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
+.room{
+    border: 1px solid #ccccff;
+    margin: 2px;
+    padding: 7px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.room:hover{
+    background-color: #e5e5e5;
+}
+.room:active{
+    padding-top: 4px;
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

@@ -1,6 +1,6 @@
 define([
     'backbone',
-    'models/session'
+    'models/session',
 ],function(Backbone, sessionModel){
     var View = Backbone.View.extend({
         el: $("#game-content"),

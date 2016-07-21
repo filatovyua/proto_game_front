@@ -1,9 +1,8 @@
 define([
     'backbone',
     'models/session',
-    'views/menu',
     'collections/lobbie'
-],function(Backbone, sessionModel, menu, Lobbie){
+],function(Backbone, sessionModel, Lobbie){
     
         //demo data
     var testRooms = [
@@ -13,47 +12,49 @@ define([
         { ID: "4", name: "testLol" },
         { ID: "5", name: "testLol" }
     ];
-    
     var RoomView = Backbone.View.extend({
         tagName: "room",
         className: "room-container",
         template: $("#roomTemplate").html(),
         
         render: function(){
+           
             var tmpl = _.template(this.template);
             $(this.el).html(tmpl(this.model.toJSON()));
             return this;
         }
     });
-    
+       
     var LobbieView = Backbone.View.extend({
         el: $("#game-content"),
-        session:sessionModel,
         template:$("#rooms").text(),
-        roomsEl:$("#currentRooms"),
+        roomsContainer:"#currentRooms",
+        lobbie: null,
         initialize:function(){
-            //инициализация
-            this.collection = new Lobbie(testRooms);
-            this.render();            
+            this.listenTo(Backbone,"sayHello", function(){
+                console.log("!");
+            });
+            this.lobbie = new Lobbie();
+            this.refreshRooms();
         },
         events:{
             "click a[name=newroom]":"newRoom",
+            "click a[name=refrash]":"refrashRooms",
             "click a[name=menu]":"toMenu"
         },
         render:function(){
             this.$el.html(this.template);
-            //грузим комнаты
-            var self = this;
-            _.each(this.collection.models, function(item){
-                self.renderRoom(item);
-            });
                         
         },
         renderRoom: function(item){
             var roomView = new RoomView({
                 model:item
             });
-            this.roomsEl.append(roomView.render().el);
+            $(this.roomsContainer).append(roomView.render().el);
+        },
+        refreshRooms: function(){            
+            //получаем список комнат
+            Backbone.trigger("getRooms",[]);
         },
         show: function(){
             this.render();
@@ -68,7 +69,7 @@ define([
             
         },
         onOpen: function(event){
-            this.started = true;
+            this.refreshRooms();
         },
         onClose: function(event){
             

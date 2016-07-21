@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'models/session'
-], function (Backbone, sessionModel) {
+    'models/session',
+    'models/webSocket'
+], function (Backbone, sessionModel, wsModel) {
 
     var View = Backbone.View.extend({
         el: $("#game-content"),
@@ -22,6 +23,7 @@ define([
             this.session.user = this.getLogin();
             var max = 1024;
             this.session.id = Math.floor(Math.random() * (max + 1));
+            //wsModel.open();
             this.trigger('success');
         },
         show: function () {

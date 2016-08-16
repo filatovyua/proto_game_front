@@ -1,8 +1,7 @@
 define([
     'backbone',
-    'models/session',
-    'models/webSocket'
-], function (Backbone, sessionModel, wsModel) {
+    'models/session'
+], function (Backbone, sessionModel) {
 
     var View = Backbone.View.extend({
         el: $("#game-content"),

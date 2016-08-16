@@ -4,7 +4,6 @@ requirejs.config({
         "backbone":"lib/backbone",
         "underscore":"lib/underscore",
         "session": "models/session",
-        "ws":"models/webSocket"
     },
     shim:{
         'backbone':{
@@ -24,12 +23,10 @@ requirejs.config({
 });
 define([
     'backbone',
-    'jquery',
     'route'
 ], function(
         Backbone,
-        route,
-        jQuery
+        Router
         ){
     Backbone.history.start();
 });

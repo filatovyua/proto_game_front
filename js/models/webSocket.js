@@ -1,39 +1,39 @@
 define([
-    'backbone'
-], function (Backbone) {
-
-    var WsConnect = Backbone.Model.extend({
-        _baseUrl: "ws://localhost:9000/gameplay",
-        ws: null,
-        connectionTimeLimit: 100,
-        open: function () {
-            this.ws = new WebSocket(this._baseUrl);
-
-            this.ws.onopen = (function (_this) {
-                return function (e) {
-                    _this.trigger("socketOpen", [e]);
-                }
-            })(this);
-
-            this.ws.onmessage = (function (_this) {
-                return function (event) {
-                    console.log(event);
-                    _this.trigger("socketMessage", [event.data])
-                }
-            })(this);
-            this.ws.onclose = (function (_this) {
-                return function (event) {
-                    _this.trigger("socketClose", [event]);
-                }
-            })(this);
-
-            this.ws.onerror = (function (_this) {
-                return function (error) {
-                    _this.trigger("socketError", [error.message]);
-                }
-            })(this);
-        },
-        sendMessage: function (data) {
+], function () {
+    var WS = function(_url){
+        this.WsHost = "ws://localhost:9000";
+        this.connectionTimeLimit = 100;
+        this.url = _url;
+        this.onopen  = function(){ console.log("connection start");}
+        this.onmessage = function(data){ 
+        }
+        this.onerror = function(data){ 
+            console.log("error",data);
+            
+        }
+        this.onclose = function(event){
+              if (event.wasClean) {
+                console.log('connection clear');
+              } else {
+                console.log('disconnect'); // например, "убит" процесс сервера
+              }
+              console.log('Code: ' + event.code + ' reason: ' + event.reason);
+        }
+    }
+    WS.prototype.open = function(){
+        this.ws = new WebSocket(this.WsHost + "/" + this.url); 
+        this.ws.onmessage = this.onmessage;
+        this.ws.onerror = this.onerror;
+        this.ws.onopen = this.onopen;    
+        this.ws.onclose = this.onclose;
+    }
+    WS.prototype.close = function(){
+        this.ws.close();
+    }
+    WS.prototype.reconnect = function(){
+        this.open();
+    }
+    WS.prototype.send = function(data){
             if (this.ws == null)
                 throw new Error("WebSocked is not open");
             var counter = 0, l = this.connectionTimeLimit;
@@ -44,7 +44,6 @@ define([
                             callback();
                         }
                         return;
-
                     } else {
                         if (++counter>=l){
                             console.log("Connection lost");
@@ -62,8 +61,7 @@ define([
                     _this.ws.send(data);
                 });
             })(this);
-        }
-    });
-    return new WsConnect();
+    }
+    return WS;
 });
 

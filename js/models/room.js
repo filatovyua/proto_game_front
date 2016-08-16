@@ -4,9 +4,19 @@ define([
         Backbone
         ) {
     var Room = Backbone.Model.extend({
+        users:[],
+        initialize: function(){
+            
+        },
+        clear: function(){
+            
+        },
+        join: function(){
+            
+        },
         defaults:{
             name: "test",
-            ID: "1",
+            roomId: "1",
             photo: ""
         }
     });

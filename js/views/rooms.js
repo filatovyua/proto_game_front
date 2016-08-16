@@ -1,78 +1,63 @@
 define([
     'backbone',
-    'models/session',
     'collections/lobbie'
-],function(Backbone, sessionModel, Lobbie){
-    
-        //demo data
-    var testRooms = [
-        { ID: "1", name: "testLol" },
-        { ID: "2", name: "testLol" },
-        { ID: "3", name: "testLol" },
-        { ID: "4", name: "testLol" },
-        { ID: "5", name: "testLol" }
-    ];
-    var RoomView = Backbone.View.extend({
-        tagName: "room",
-        className: "room-container",
-        template: $("#roomTemplate").html(),
+],function(Backbone, Lobbie){
         
-        render: function(){
-           
-            var tmpl = _.template(this.template);
-            $(this.el).html(tmpl(this.model.toJSON()));
-            return this;
+    var lobbie = new Lobbie;
+    
+    var RoomView = Backbone.View.extend({
+        template: $("#roomTemplate").html(),        
+        render: function(data){
+            var tmpl, result;
+            tmpl = _.template(this.template);   
+            result = [];
+            for (var el in data){
+                result.push(tmpl({
+                    joined:!!(el == lobbie.currentUserRoomID),
+                    ID: el,
+                    name: "nm"
+                }));   
+            }
+            return result.join("\n");
         }
     });
-       
+
     var LobbieView = Backbone.View.extend({
         el: $("#game-content"),
-        template:$("#rooms").text(),
-        roomsContainer:"#currentRooms",
-        lobbie: null,
+        template:_.template($("#rooms").html()),
         initialize:function(){
-            this.listenTo(Backbone,"sayHello", function(){
-                console.log("!");
-            });
-            this.lobbie = new Lobbie();
-            this.refreshRooms();
+            this.listenTo(lobbie,"refreshRooms",this.refreshRooms);
         },
         events:{
             "click a[name=newroom]":"newRoom",
-            "click a[name=refrash]":"refrashRooms",
-            "click a[name=menu]":"toMenu"
+            "click a[name=menu]":"toMenu",
+            "click a[name=quit]":"quitRoom",
+            "click .room":"joinRoom"
+        },
+        newRoom: function(){
+          lobbie.createRoom("nm");
+        },
+        refreshRooms: function(data){
+            var view = new RoomView();
+            this.$el.find("#currentRooms").html(view.render(data));
         },
         render:function(){
             this.$el.html(this.template);
                         
         },
-        renderRoom: function(item){
-            var roomView = new RoomView({
-                model:item
-            });
-            $(this.roomsContainer).append(roomView.render().el);
+        joinRoom: function(event){
+            lobbie.joinRoom(event.currentTarget.getAttribute("roomID"));
         },
-        refreshRooms: function(){            
-            //получаем список комнат
-            Backbone.trigger("getRooms",[]);
+        quitRoom: function(event){
+            lobbie.quitRoom();
         },
         show: function(){
             this.render();
-        },
-        newRoom: function(){
-            
+            lobbie.start();
         },
         toMenu: function(){
+           lobbie.stop();
            this.trigger("menu");
-        },
-        onMessage:function(event){
-            
-        },
-        onOpen: function(event){
-            this.refreshRooms();
-        },
-        onClose: function(event){
-            
         }
     });
     return new LobbieView();

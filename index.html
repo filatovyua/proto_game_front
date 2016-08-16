@@ -52,19 +52,18 @@
         <script id="rooms" type="text/template">
             <div class="list-group">
                 <a href="javascript:;" class="list-group-item" name="newroom">Новая комната</a>  
-                <a href="javascript:;" class="list-group-item" name="refrash">Обновить</a>  
                 <div>
                 <h4>Комнаты</h4>
                 <div class='row' id='currentRooms'></div>
+                <a href="javascript:;" class="list-group-item" name="quit">Выйти из комнаты</a>
                 </div>
                 <a href="javascript:;" class="list-group-item" name="menu">Назад</a>
             </div>
         </script>
         
         <script id="roomTemplate" type="text/template">
-            <div class='col-md-3 room'>
-                 <div class='name'>Имя <%= name %></div>
-                 <div class='ID'>ID <%= ID %></div>
+            <div class='col-md-3 room' roomID='<%= ID %>' joined='<%= joined %>'>
+                 <div class='name'>Комната <%= name %> <%= ID %></div>
             </div>
         </script>
         

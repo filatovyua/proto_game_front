@@ -1,44 +1,45 @@
 define([
     'backbone',
     'models/room',
-    "models/webSocket"
+    "models/webSocket",
+    "models/session"
 ], function (
         Backbone,
         Room,
-        WS
+        WS,
+        Session
         ) {
-
+    /**
+     * Формат приема JSON
+     * [{id:1,rn:"lol",ps:{"user":{}}}]
+     * 
+     */
     var Lobbie = Backbone.Collection.extend({
         model: Room,
         connect: null,
-        currentRooms: {},
-        currentUserRoomID:0,
+        currentRooms: [],
+        currentUserRoomID: 0,
         initialize: function () {
             this.connect = new WS("rooms");
             return (function (_this) {
                 _this.connect.onmessage = function (event) {
-                    var data = JSON.parse(event.data), flag = false;
-                    if (data && Object.keys(data).length > 0) { 
-                        if (!_this.currentRooms) _this.currentRooms = {};
-                        if (!data[_this.currentUserRoomID] || Object.keys(data[_this.currentUserRoomID]).length == 0) {
-                            if (_this.currentUserRoomID != 0)
-                                flag = true;
-                            _this.currentUserRoomID = 0;                            
-                        }
-                        for (var i in data){
-                            if (!_.contains(Object.keys(_this.currentRooms),i)){
-                                _this.currentRooms[i] = data[i];
-                                flag = true;
-                            }
-                            if (Object.keys(data[i]).length>0 && _this.currentUserRoomID !== i) {
-                                flag = true;
-                                _this.currentUserRoomID = i;
-                            }
-                        }
-                        if (flag === true){
-                            _this.trigger("refreshRooms",data);
-                        }
+                    var data;
+                    data = JSON.parse(event.data);
+                    if (!_this.currentRooms)
+                        _this.currentRooms = [];
+                    if (!_.isEqual(_this.currentRooms, data)) {
+                        _this.currentUserRoomID = 0;
+                        _this.currentRooms = data;
+                        //находим в какой комнате находится пользователь
+                        data.forEach(function (item) {
+                            if (item.players[Session.user])
+                                _this.currentUserRoomID = item.roomId;
+                        });
+                        _this.trigger("refreshRooms", data);
                     }
+                };
+                _this.connect.onopen = function(){
+                    _this.currentRooms = [];
                 }
                 _this.connect.onerror = function (data) {
                     console.log(data);

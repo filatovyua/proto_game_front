@@ -6,12 +6,11 @@ define([
     var SessionModel = Backbone.Model.extend({
         _baseUrl: "http://localhost:9000/",
         user: "",
-        sessionId: 0,
+        status: 0,
         sendPost: function (action, data, eventSuccess, eventError, type) {
             var self = this;   
             var type = type || "JSON";
             var url = this._baseUrl + action;
-            console.log(this._baseUrl+action);
             $.post(url, data)
                     .success(function (data) {
                         if (type == "JSON")
@@ -41,6 +40,6 @@ define([
             this.sendPost("logout",{login:this.user,id:this.sessionId},"successLogoff","errorLogoff")
         }
     });
-    return new SessionModel();
+    return new SessionModel;
 });
 

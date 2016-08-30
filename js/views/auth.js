@@ -6,7 +6,6 @@ define([
     var View = Backbone.View.extend({
         el: $("#game-content"),
         template: $("#auth").text(),
-        session: sessionModel,
         events: {
             "click .btn[name=signin]": "submitClick",
             "click .btn[name=signup]": "signUpClick",
@@ -14,14 +13,13 @@ define([
             "blur input[name=password]": "passwordBlur"
         },
         initialize: function () {
-            this.listenTo(this.session, 'successAuth', this.loginSuccess);
-            this.listenTo(this.session, 'successRegist', this.registSuccess);
-            this.listenTo(this.session, 'errorAuth', this.loginError);
+            this.listenTo(sessionModel, 'successAuth', this.loginSuccess);
+            this.listenTo(sessionModel, 'successRegist', this.registSuccess);
+            this.listenTo(sessionModel, 'errorAuth', this.loginError);
         },
-        loginSuccess: function () {
-            this.session.user = this.getLogin();
-            var max = 1024;
-            this.session.id = Math.floor(Math.random() * (max + 1));
+        loginSuccess: function (data) {
+            sessionModel.user = data["user"];
+            sessionModel.status = data["status"];
             //wsModel.open();
             this.trigger('success');
         },
@@ -53,7 +51,7 @@ define([
             var password = this.getPassword();
             if (!this.validate(login, password))
                 return false;
-            this.session.postAuth({login: login, password: password});
+            sessionModel.postAuth({login: login, password: password});
         },
         validate: function (login, password) {
             return true;
@@ -72,7 +70,7 @@ define([
             var password = this.getPassword();
             if (!this.validate(login,password))
                 return false;
-            this.session.postRegist({login: login, password: password, "registration":"1"});
+            sessionModel.postRegist({login: login, password: password, "registration":"1"});
         },
         registSuccess:function(){
             console.log("regist success");

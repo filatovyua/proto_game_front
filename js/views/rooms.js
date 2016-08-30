@@ -1,63 +1,63 @@
 define([
     'backbone',
     'collections/lobbie'
-],function(Backbone, Lobbie){
-        
+], function (Backbone, Lobbie) {
+
     var lobbie = new Lobbie;
-    
+
     var RoomView = Backbone.View.extend({
-        template: $("#roomTemplate").html(),        
-        render: function(data){
+        template: $("#roomTemplate").html(),
+        render: function (data) {
             var tmpl, result;
-            tmpl = _.template(this.template);   
+            tmpl = _.template(this.template);
             result = [];
-            for (var el in data){
-                result.push(tmpl({
-                    joined:!!(el == lobbie.currentUserRoomID),
-                    ID: el,
-                    name: "nm"
-                }));   
-            }
+            data.forEach(function (item) {
+               result.push(tmpl({
+                   joined:!!(item.roomId == lobbie.currentUserRoomID),
+                   ID: item.roomId,
+                   name: item.roomName
+               }));
+            });
             return result.join("\n");
         }
     });
 
     var LobbieView = Backbone.View.extend({
         el: $("#game-content"),
-        template:_.template($("#rooms").html()),
-        initialize:function(){
-            this.listenTo(lobbie,"refreshRooms",this.refreshRooms);
+        template: _.template($("#rooms").html()),
+        initialize: function () {
+            this.listenTo(lobbie, "refreshRooms", this.refreshRooms);
         },
-        events:{
-            "click a[name=newroom]":"newRoom",
-            "click a[name=menu]":"toMenu",
-            "click a[name=quit]":"quitRoom",
-            "click .room":"joinRoom"
+        events: {
+            "click a[name=newroom]": "newRoom",
+            "click a[name=menu]": "toMenu",
+            "click a[name=quit]": "quitRoom",
+            "click .room": "joinRoom"
         },
-        newRoom: function(){
-          lobbie.createRoom("nm");
+        newRoom: function () {
+            lobbie.createRoom("nm");
         },
-        refreshRooms: function(data){
+        refreshRooms: function (data) {
             var view = new RoomView();
             this.$el.find("#currentRooms").html(view.render(data));
         },
-        render:function(){
+        render: function () {
             this.$el.html(this.template);
-                        
+
         },
-        joinRoom: function(event){
+        joinRoom: function (event) {
             lobbie.joinRoom(event.currentTarget.getAttribute("roomID"));
         },
-        quitRoom: function(event){
+        quitRoom: function (event) {
             lobbie.quitRoom();
         },
-        show: function(){
+        show: function () {
             this.render();
             lobbie.start();
         },
-        toMenu: function(){
-           lobbie.stop();
-           this.trigger("menu");
+        toMenu: function () {
+            lobbie.stop();
+            this.trigger("menu");
         }
     });
     return new LobbieView();

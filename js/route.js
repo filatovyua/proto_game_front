@@ -24,6 +24,7 @@ define([
     var Router = Backbone.Router.extend({
         $container: null,
         initialize: function () {
+            console.log("!");
             this.$container = $("#game-content");
             this.listenTo(auth, 'success', this.toMenu);
             this.listenTo(menu, 'exit', this.toIndex);
@@ -33,6 +34,7 @@ define([
             this.listenTo(menu, 'rooms', this.toRooms);
             this.listenTo(menu, 'game', this.toGame);
             this.listenTo(rooms, 'menu', this.toMenu);
+            this.listenTo(rooms, "game", this.toGame);
             this.toIndex();
         },
         routes: {

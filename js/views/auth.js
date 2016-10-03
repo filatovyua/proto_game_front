@@ -20,10 +20,16 @@ define([
         loginSuccess: function (data) {
             sessionModel.user = data["user"];
             sessionModel.status = data["status"];
+            if (window.localStorage) {
+                window.localStorage.setItem(sessionModel.userLocalStorageKey, sessionModel.user);
+            }
             //wsModel.open();
             this.trigger('success');
         },
         show: function () {
+            if (window.localStorage) {
+                window.localStorage.removeItem(sessionModel.userLocalStorageKey);
+            }
             this.render();
         },
         loginError: function () {
@@ -68,11 +74,11 @@ define([
         signUpClick: function () {
             var login = this.getLogin();
             var password = this.getPassword();
-            if (!this.validate(login,password))
+            if (!this.validate(login, password))
                 return false;
-            sessionModel.postRegist({login: login, password: password, "registration":"1"});
+            sessionModel.postRegist({login: login, password: password, "registration": "1"});
         },
-        registSuccess:function(){
+        registSuccess: function () {
             console.log("regist success");
             this.submitClick();
         }

@@ -32,7 +32,8 @@ define([
             "click a[name=newroom]": "newRoom",
             "click a[name=menu]": "toMenu",
             "click a[name=quit]": "quitRoom",
-            "click .room": "joinRoom"
+            "click a[name=startgame]": "startGame",
+            "click .room": "joinRoom",
         },
         newRoom: function () {
             lobbie.createRoom("nm");
@@ -58,6 +59,9 @@ define([
         toMenu: function () {
             lobbie.stop();
             this.trigger("menu");
+        },
+        startGame: function(){
+            this.trigger("game")
         }
     });
     return new LobbieView();

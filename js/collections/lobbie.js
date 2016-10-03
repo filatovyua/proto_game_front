@@ -32,7 +32,7 @@ define([
                         _this.currentRooms = data;
                         //находим в какой комнате находится пользователь
                         data.forEach(function (item) {
-                            if (item.players[Session.user])
+                            if (item.players[Session.getUser()])
                                 _this.currentUserRoomID = item.roomId;
                         });
                         _this.trigger("refreshRooms", data);

@@ -2,8 +2,7 @@ requirejs.config({
     paths:{
         "jquery":"lib/jquery",
         "backbone":"lib/backbone",
-        "underscore":"lib/underscore",
-        "session": "models/session",
+        "underscore":"lib/underscore"
     },
     shim:{
         'backbone':{

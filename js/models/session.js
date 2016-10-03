@@ -6,6 +6,7 @@ define([
     var SessionModel = Backbone.Model.extend({
         _baseUrl: "http://localhost:9000/",
         user: "",
+        userLocalStorageKey:"protogameUser",
         status: 0,
         sendPost: function (action, data, eventSuccess, eventError, type) {
             var self = this;   
@@ -25,6 +26,15 @@ define([
                         self.trigger(eventError, "Error");
                     });
         },
+        reconnect: function(){
+            if (window.localStorage){
+                var user = window.localStorage.getItem(this.userLocalStorageKey);
+                if (user){
+                    return this.user = user;
+                }
+            }
+            return null;            
+        },
         postAuth: function(data){
            //this.trigger('successAuth',data);
            this.sendPost("auth",data,'successAuth','errorAuth');
@@ -38,6 +48,9 @@ define([
         },
         postLogoff: function(){
             this.sendPost("logout",{login:this.user,id:this.sessionId},"successLogoff","errorLogoff")
+        },
+        getUser: function(){
+            return this.user || this.reconnect();
         }
     });
     return new SessionModel;

@@ -1,10 +1,12 @@
 define([
     'backbone',
-    'models/session'
-],function(Backbone, sessionModel){
+    "models/game"
+],function(Backbone, Game){
+    
+    var Game = new Game();
+    
     var View = Backbone.View.extend({
         el: $("#game-content"),
-        session:sessionModel,
         template:$("#game").text(),
         started: false,
         finished: false,
@@ -15,7 +17,7 @@ define([
 
         },
         events:{
-
+            
         },
         render:function(){
             this.$el.html(this.template);
